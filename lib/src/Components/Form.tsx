@@ -1,8 +1,38 @@
+import { useState } from "react";
+import type { IBooks } from "../Interface/IBooks";
+
 export const Form = ({ onClose }: { onClose: () => void }) => {
+
+  const [formData, setFormData] = useState<IBooks>({
+    
+    title: "",
+    Author: "",
+    year: 0,
+    genre: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === "year" ? Number(value) : value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formData); 
+    alert("Book saved successfully!");
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-      <form className="bg-white p-6 rounded-2xl shadow-md w-full max-w-md space-y-4 relative">
-        {/* Close Button */}
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded-2xl shadow-md w-full max-w-md space-y-4 relative"
+      >
         <button
           type="button"
           onClick={onClose}
@@ -21,7 +51,9 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
           </label>
           <input
             type="text"
-            placeholder="Book title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
             className="input input-bordered w-full bg-white"
           />
         </div>
@@ -32,7 +64,9 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
           </label>
           <input
             type="text"
-            placeholder="Author name"
+            name="Author"
+            value={formData.Author}
+            onChange={handleChange}
             className="input input-bordered w-full bg-white"
           />
         </div>
@@ -43,7 +77,9 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
           </label>
           <input
             type="number"
-            placeholder="Publication year"
+            name="year"
+            value={formData.year}
+            onChange={handleChange}
             className="input input-bordered w-full bg-white"
           />
         </div>
@@ -54,12 +90,14 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
           </label>
           <input
             type="text"
-            placeholder="Genre"
+            name="genre"
+            value={formData.genre}
+            onChange={handleChange}
             className="input input-bordered w-full bg-white"
           />
         </div>
 
-        <button className="btn btn-primary w-full">
+        <button type="submit" className="btn btn-primary w-full">
           Save Book
         </button>
       </form>
