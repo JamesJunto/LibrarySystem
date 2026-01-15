@@ -1,15 +1,19 @@
 import { Header } from "./Components/Header";
 import { Dashboard } from "./Pages/Dashboard";
 import { SideNav } from "./Components/Side_nav";
+
 function App() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
+      {/* HEADER */}
       <Header />
-      <div className="flex min-h-screen">
+    
+      {/* MAIN CONTENT */}
+      <div className="flex items-center">
         <SideNav />
         <Dashboard />
       </div>
-    </>
+    </div>
   );
 }
 

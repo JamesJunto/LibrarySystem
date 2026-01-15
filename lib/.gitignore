@@ -1,3 +1,7 @@
+/connection.php
+/cors.php
+.env
+
 # Logs
 logs
 *.log

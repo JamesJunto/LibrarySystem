@@ -5,7 +5,7 @@ export const useFetch = (url: string) => {
   const [data, setData] = useState<IBooks[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -4,4 +4,8 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
+   server: {
+    port: Number(process.env.VITE_PORT),
+    strictPort: true
+  }
 })

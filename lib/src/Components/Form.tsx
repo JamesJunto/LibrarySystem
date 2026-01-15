@@ -26,9 +26,17 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await submitForm(formData);
-    alert("Book saved successfully!");
-    onClose();
+
+    const {title, author, genre} = formData
+
+    if(!title.trim() ||!author.trim() || !genre.trim()){
+       alert("fill all the blanks")
+    }else{
+      await submitForm(formData)
+      alert("data save to the database!")
+      onClose()
+    }
+
   };
 
   return (
@@ -101,7 +109,7 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary w-full">
+        <button type="submit" className="btn btn-success w-full">
           Save Book
         </button>
       </form>
