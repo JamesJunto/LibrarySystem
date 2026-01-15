@@ -15,7 +15,7 @@ export const Card = ({ book }: { book: IBooks }) => {
           <div className="badge badge-secondary">NEW</div>
         </h2>
         <p>
-          <strong>Author:</strong> {book.Author} <br />
+          <strong>Author:</strong> {book.author} <br />
           <strong>Year:</strong> {book.year} <br />
           <strong>Genre:</strong> {book.genre}
         </p>

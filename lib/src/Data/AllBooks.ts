@@ -1,43 +1,17 @@
 import { type IBooks } from "../Interface/IBooks";
+import { useFetch } from "../hooks/useGet";
+import { useEffect } from "react";
 
-export const AllBooks: IBooks[] = [
-  {
-    id: 1,
-    title: "To Kill a Mockingbird",
-    Author: "Harper Lee",
-    year: 1960,
-    genre: "Fiction",
-  },
+let allBooksArray: IBooks[] = [];
 
-  {
-    id: 2,
-    title: "1984",
-    Author: "George Orwell",
-    year: 1949,
-    genre: "Dystopian",
-  },
-
-  {
-    id: 3,
-    title: "1984",
-    Author: "George Orwell",
-    year: 1949,
-    genre: "Dystopian",
-  },
-
-  {
-    id: 4,
-    title: "1984",
-    Author: "George Orwell",
-    year: 1949,
-    genre: "Dystopian",
-  },
-
-  {
-    id: 5,
-    title: "1984",
-    Author: "George Orwell",
-    year: 1949,
-    genre: "Dystopian",
-  }
-];
+export const AllBooks = () => { 
+  const { data } = useFetch("http://localhost:8080/getBook.php");
+  
+  useEffect(() => {
+    if (data) {
+      allBooksArray = data; 
+    }
+  }, [data]);
+  
+  return allBooksArray;
+};

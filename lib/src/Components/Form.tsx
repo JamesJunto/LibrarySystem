@@ -7,6 +7,7 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
   const { submitForm } = useSubmitForm();
 
   const [formData, setFormData] = useState<IBooks>({
+    id: 0,
     title: "",
     author: "",
     year: 0,

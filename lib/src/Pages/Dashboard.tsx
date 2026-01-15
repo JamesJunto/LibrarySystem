@@ -2,14 +2,16 @@ import { Card } from "../Components/Card";
 import { AllBooks } from "../Data/AllBooks";
 import { useState } from "react";
 import { Form } from "../Components/Form";
+import type { IBooks } from "../Interface/IBooks";
 
 export const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
 
+  const Books = AllBooks();
   return (
     <>
       <div className="flex flex-wrap gap-6 p-7">
-        {AllBooks.map((book) => (
+        {Books.map((book: IBooks) => (
           <Card key={book.id} book={book} />
         ))}
 
