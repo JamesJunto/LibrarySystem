@@ -1,11 +1,12 @@
 import { AllBooks } from '../Data/AllBooks';
 import { Form } from '../Components/Form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Dashboard = () => {
   const Books = AllBooks();
   const [formVisible, setFormVisible] = useState(false);
-
+  const navigate = useNavigate();
 
   const getGenreColor = (genre: string) => {
     const colors: { [key: string]: string } = {
@@ -21,18 +22,21 @@ export const Dashboard = () => {
   return (
     <div className="h-screen w-screen flex justify-center items-start pt-20">
       <div className="bg-white rounded-lg shadow border border-gray-200 w-full max-w-6xl">
-        
+
         {/* HEADER */}
         <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-800">
             Book Collection
           </h2>
 
-          <button onClick={() => setFormVisible(true)} className="btn btn-sm btn-success">
+          <button
+            onClick={() => setFormVisible(true)}
+            className="btn btn-sm btn-success"
+          >
             + Add Book
           </button>
-
         </div>
+
         {formVisible && <Form onClose={() => setFormVisible(false)} />}
 
         {/* TABLE */}
@@ -51,7 +55,11 @@ export const Dashboard = () => {
 
             <tbody>
               {Books.map((book) => (
-                <tr key={book.id} className="border-b">
+                <tr
+                  key={book.id}
+                  onClick={() => navigate(`/booksinfo/${book.id}`)}
+                  className="border-b cursor-pointer hover:bg-gray-100 transition"
+                >
                   <td className="text-center">{book.id}</td>
                   <td className="font-semibold">{book.title}</td>
                   <td>{book.author}</td>
