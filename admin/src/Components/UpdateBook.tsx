@@ -1,8 +1,49 @@
 import type { IBooks } from "../Interface/IBooks";
-import { useEffect, useState } from "react";
-
+import { useState  } from "react";
 export const UpdateBook = ({ onClose,book }: { onClose: () => void; book: IBooks }) => {
 
+
+  const [formData, setFormData] = useState({
+    id: book.id,
+    title: "",
+    author: "",
+    year: ""
+  });
+
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const updateBook = async () => {
+    try{
+     const response = await fetch("http://localhost:8080/updateBook.php", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json()
+
+     if (!response.ok) {
+        console.error("Server returned an error:", response.status);
+        return;
+      }
+
+      alert("Book deleted Successfully!");
+      window.location.reload()
+      console.log(result)
+    }catch(e){
+      console.error(e)
+    }
+  }
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -27,7 +68,9 @@ export const UpdateBook = ({ onClose,book }: { onClose: () => void; book: IBooks
             </label>
             <input
               type="text"
-              defaultValue={book?.title}
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
@@ -37,8 +80,10 @@ export const UpdateBook = ({ onClose,book }: { onClose: () => void; book: IBooks
               Author
             </label>
             <input
+              name="author"
               type="text"
-              defaultValue={book?.author}
+              value={formData.author}
+              onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
@@ -48,13 +93,15 @@ export const UpdateBook = ({ onClose,book }: { onClose: () => void; book: IBooks
               Year
             </label>
             <input
+              name="year"
+              value={formData.year}
+              onChange={handleChange}
               type="number"
-              defaultValue={book?.year}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
 
-          <button className="w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition">
+          <button onClick={updateBook} className ="w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition">
             Update Book
           </button>
         </div>
