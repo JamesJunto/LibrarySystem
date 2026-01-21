@@ -19,7 +19,7 @@ function App() {
     {
       path: "/booksinfo/:bookId",
       element: (
-        <div className="flex items-start">
+        <div className="">
           <BooksInfo />
         </div>
       )

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { IBooks } from "../Interface/IBooks";
 
-export const useFetch = (url: string) => {
+export const useGet = (url: string) => {
   const [data, setData] = useState<IBooks[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
