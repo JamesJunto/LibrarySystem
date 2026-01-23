@@ -1,36 +1,57 @@
 import { useUpdateBook } from "../hooks/useUpdateBook";
 import type { IBooks } from "../Interface/IBooks";
-import { useState  } from "react";
+import { useState } from "react";
 
-export const UpdateBook = ({ onClose,book }: { onClose: () => void; book: IBooks }) => {
-
-  const { updateBook }  = useUpdateBook();
+export const UpdateBook = ({
+  onClose,
+  book,
+}: {
+  onClose: () => void;
+  book: IBooks;
+}) => {
+  const { updateBook } = useUpdateBook();
 
   const [formData, setFormData] = useState({
     id: book.id,
     title: book.title,
     author: book.author,
     year: book.year,
-    genre: book.genre
+    genre: book.genre,
   });
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleUpdate = async () => {
-    await updateBook("http://localhost:8080/updateBook.php", formData)
-  }
+    const { title, author, year } = formData;
+    const yearValue = year.trim();
+    const yearNumber = Number(yearValue);
+
+    if (
+      !title.trim() ||
+      !author.trim() ||
+      !yearValue ||
+      isNaN(yearNumber) ||
+      yearNumber <= 0
+    ) {
+      alert(
+        "Invalid input! Make sure all fields are filled and Year is a valid number.",
+      );
+      return;
+    }
+
+    await updateBook("http://localhost:8080/updateBook.php", formData);
+  };
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-
         <button
           onClick={onClose}
           type="button"
@@ -83,7 +104,10 @@ export const UpdateBook = ({ onClose,book }: { onClose: () => void; book: IBooks
             />
           </div>
 
-          <button onClick={handleUpdate} className ="w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition">
+          <button
+            onClick={handleUpdate}
+            className="w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition"
+          >
             Update Book
           </button>
         </div>
