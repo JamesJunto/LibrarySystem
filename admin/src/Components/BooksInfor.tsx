@@ -2,36 +2,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAllBooks } from "../Data/AllBooks";
 import { UpdateBook } from "./UpdateBook";
+import { useDeleteBook } from "../hooks/useDeleteBook";
 
 export const BooksInfo = () => {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
 
   const { bookId } = useParams<{ bookId: string }>();
   const { data: books, loading, error } = useAllBooks();
+  const { deleteBook } = useDeleteBook();
 
   const navigate = useNavigate();
-  const bookid = Number(bookId);
 
-  const deleteBook = async (bookId: number) => {
-    try {
-      const response = await fetch("http://localhost:8080/deleteBook.php", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: bookId }),
-      });
-
-      if (!response.ok) {
-        console.error("Server returned an error:", response.status);
-        return;
-      }
-
-      alert("Book deleted Successfully!");
-      navigate("/");
-    } catch (e) {
-      console.error(e);
-    }
+  const handleDelete = async (bookId:number) => {
+    await deleteBook("http://localhost:8080/deleteBook.php", bookId);
   };
 
   if (loading) {
@@ -208,7 +191,7 @@ export const BooksInfo = () => {
                 Update Book
               </button>
               <button
-                onClick={() => deleteBook(bookid)}
+                onClick={() => handleDelete(book?.id)}
                 className="flex-1 px-6 py-4 bg-red-600 text-white rounded-sm hover:bg-red-700 transition-all duration-200 font-bold "
               >
                 Delete Book
@@ -221,7 +204,6 @@ export const BooksInfo = () => {
       {showUpdateForm && (
         <UpdateBook onClose={() => setShowUpdateForm(false)} book={book} />
       )}
-      
     </div>
   );
 };

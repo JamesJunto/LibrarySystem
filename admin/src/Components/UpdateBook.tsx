@@ -14,7 +14,7 @@ export const UpdateBook = ({ onClose,book }: { onClose: () => void; book: IBooks
     genre: book.genre
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
