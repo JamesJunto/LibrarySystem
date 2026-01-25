@@ -2,14 +2,22 @@ import { useState, useRef, useEffect } from "react";
 import type { IBooks } from "../Interface/IBooks";
 import { useSubmitForm } from "../hooks/useSubmitForm";
 
-export const Form = ({ onClose }: { onClose: () => void }) => {
+
+type FormProps = {
+  onClose: () => void;
+  freshData: () => void;
+};
+
+
+export const Form = ({ onClose, freshData }: FormProps) =>{
+  
   const { submitForm } = useSubmitForm();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState<IBooks>({
     id: 0,
     title: "",
-    author: "",
+    author: "", 
     year: "",
     genre: "",
   });
@@ -51,8 +59,7 @@ export const Form = ({ onClose }: { onClose: () => void }) => {
     }
 
     await submitForm(formData);
-    alert("Data saved to the database!");
-    window.location.reload();
+    freshData()
     onClose();
   };
 

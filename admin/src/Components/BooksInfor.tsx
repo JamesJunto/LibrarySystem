@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useAllBooks } from "../Data/AllBooks";
 import { UpdateBook } from "./UpdateBook";
 import { useDeleteBook } from "../hooks/useDeleteBook";
@@ -15,6 +15,7 @@ export const BooksInfo = () => {
 
   const handleDelete = async (bookId:number) => {
     await deleteBook("http://localhost:8080/deleteBook.php", bookId);
+    navigate("/")
   };
 
   if (loading) {

@@ -1,10 +1,18 @@
-import { useAllBooks } from '../Data/AllBooks';
 import { Form } from '../Components/Form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import type { IBooks } from '../Interface/IBooks';
 
-export const Dashboard = () => {
-  const { data: books, loading, error } = useAllBooks();
+type DashboardProps = {
+  books: IBooks[];
+  loading: boolean;
+  error: string | null;
+  fetchData: ()=> void
+};
+
+
+
+export const Dashboard = ({ books, loading, error, fetchData }: DashboardProps) => {
   const [formVisible, setFormVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -55,7 +63,7 @@ export const Dashboard = () => {
           </button>
         </div>
 
-        {formVisible && <Form onClose={() => setFormVisible(false)} />}
+        {formVisible && <Form onClose={() => setFormVisible(false)} freshData={fetchData} />}
 
         {/* TABLE */}
         <div className="overflow-x-auto">
