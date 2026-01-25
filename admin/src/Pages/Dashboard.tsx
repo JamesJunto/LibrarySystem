@@ -10,8 +10,6 @@ type DashboardProps = {
   fetchData: ()=> void
 };
 
-
-
 export const Dashboard = ({ books, loading, error, fetchData }: DashboardProps) => {
   const [formVisible, setFormVisible] = useState(false);
   const navigate = useNavigate();

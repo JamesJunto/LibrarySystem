@@ -1,14 +1,20 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState,useEffect } from "react";
-import { useAllBooks } from "../Data/AllBooks";
+import { useState} from "react";
 import { UpdateBook } from "./UpdateBook";
 import { useDeleteBook } from "../hooks/useDeleteBook";
+import type { IBooks } from '../Interface/IBooks';
 
-export const BooksInfo = () => {
+type booksInfoProps = {
+  books: IBooks[];
+  loading: boolean;
+  error: string | null;
+  fetchData: ()=> void
+};
+
+export const BooksInfo = ({fetchData,books,loading,error}: booksInfoProps) => {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
 
   const { bookId } = useParams<{ bookId: string }>();
-  const { data: books, loading, error } = useAllBooks();
   const { deleteBook } = useDeleteBook();
 
   const navigate = useNavigate();
@@ -203,7 +209,7 @@ export const BooksInfo = () => {
       </div>
 
       {showUpdateForm && (
-        <UpdateBook onClose={() => setShowUpdateForm(false)} book={book} />
+        <UpdateBook onClose={() => setShowUpdateForm(false)} book={book} newData={fetchData} />
       )}
     </div>
   );

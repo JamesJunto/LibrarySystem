@@ -1,9 +1,14 @@
-import { useGet } from "../hooks/useGet";
 import { useUpdateBook } from "../hooks/useUpdateBook";
 import type { IBooks } from "../Interface/IBooks";
 import { useState } from "react";
 
-export const UpdateBook = ({onClose,book}: {onClose: () => void;book: IBooks;}) => {
+type UpdateBookProp = {
+  onClose: ()=> void,
+  book: IBooks,
+  newData:()=> void
+}
+
+export const UpdateBook = ({onClose,book,newData}:UpdateBookProp) => {
   const { updateBook } = useUpdateBook();
 
   const [formData, setFormData] = useState({
@@ -14,7 +19,7 @@ export const UpdateBook = ({onClose,book}: {onClose: () => void;book: IBooks;}) 
     genre: book.genre,
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
@@ -40,8 +45,8 @@ export const UpdateBook = ({onClose,book}: {onClose: () => void;book: IBooks;}) 
       );
       return;
     }
-
     await updateBook("http://localhost:8080/updateBook.php", formData);
+    newData()
     onClose()
   };
 

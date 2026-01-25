@@ -2,12 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import type { IBooks } from "../Interface/IBooks";
 import { useSubmitForm } from "../hooks/useSubmitForm";
 
-
 type FormProps = {
   onClose: () => void;
   freshData: () => void;
 };
-
 
 export const Form = ({ onClose, freshData }: FormProps) =>{
   

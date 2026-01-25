@@ -23,7 +23,7 @@ function App() {
       path: "/booksinfo/:bookId",
       element: (
         <div className="">
-          <BooksInfo />
+          <BooksInfo fetchData={fetchData} books={data} loading={loading} error={error}/>
         </div>
       )
     }
